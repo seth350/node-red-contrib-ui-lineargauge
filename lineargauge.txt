@@ -48,11 +48,11 @@
 </style>
 
 <div id="lgTank2">
-        <text class="lgText" dx="10" dy="3">{{msg.payload.Tank2_Temp_Actual}}F°</text>
+        <text class="lgText" dx="10" dy="3">{{msg.payload.currentvalue}}F°</text>
         </div>
         <div class="linearGauge1">
             <svg class="scaleContainer">
-                <title>HL: {{msg.payload.Tank2_Temp_HighL}}F°&#013;LL: {{msg.payload.Tank2_Temp_LowL}}F°&#013;SP: {{msg.payload.Tank2_Temp_Setpoint}}F°</title>
+                <title>HL: {{msg.payload.highlimit}}&#013;LL: {{msg.payload.lowlimit}}&#013;SP: {{msg.payload.setpoint}}</title>
                 <rect class="scaleArea1" x="0" y="141" width="20" height="47"></rect>
                 <rect class="scaleArea2" x="0" y="47" width="20" height="94"></rect>
                 <rect class="scaleArea3" x="0" y="0" width="20" height="47"></rect>
@@ -67,12 +67,12 @@
             (function(scope) {
                 scope.$watch('msg', function(msg) {
                     
-                    var input = msg.payload.Tank2_Temp_Actual
-                    var maxRange = msg.payload.Tank2_Temp_HighL
-                    var minRange = msg.payload.Tank2_Temp_LowL
+                    var input = msg.payload.currentvalue
+                    var maxRange = msg.payload.highlimit
+                    var minRange = msg.payload.lowlimit
                     var minScale = 0
                     var maxScale = 188 //this is the length of the gauge
-                    var setP = msg.payload.Tank2_Temp_Setpoint
+                    var setP = msg.payload.setpoint
                     
                     var diffH = maxRange - setP //find difference between setpoint and max limit
                     var diffL = setP - minRange //find difference between setpoint and min limit
