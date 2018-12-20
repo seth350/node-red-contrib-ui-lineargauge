@@ -1,0 +1,100 @@
+<style>
+    .linearGauge {
+        top: 0px;
+        left: 10px;
+        position:absolute;
+        width:20px;
+        height:11px;
+    }
+    
+    
+    #lgValue {
+        position: absolute;
+        width:64px;
+        height:11px;
+        justify-content: center;
+        text-align:center;
+        font-size:12px;
+    }
+    
+    .pointer {
+        fill:#696969;
+        stroke-width: 1px;
+        stroke: #404040;
+    }
+    
+    .scaleArea1 {
+        fill: rgba(255,255,192,1);
+        stroke: #000;
+        stroke-width: 1px;
+    }
+    
+    .scaleArea2 {
+        fill: rgba(153,255,153,1);
+        stroke: #000;
+        stroke-width: 1px;
+    }
+    
+    .scaleArea3 {
+        fill: rgba(255,128,128,1);
+        stroke: #000;
+        stroke-width: 1px;
+    }
+    
+    .scaleContainer {
+        height:188px;
+        width:100%;
+    }
+</style>
+
+<div id="lgTank2">
+        <text class="lgText" dx="10" dy="3">{{msg.payload.Tank2_Temp_Actual}}F°</text>
+        </div>
+        <div class="linearGauge1">
+            <svg class="scaleContainer">
+                <title>HL: {{msg.payload.Tank2_Temp_HighL}}F°&#013;LL: {{msg.payload.Tank2_Temp_LowL}}F°&#013;SP: {{msg.payload.Tank2_Temp_Setpoint}}F°</title>
+                <rect class="scaleArea1" x="0" y="141" width="20" height="47"></rect>
+                <rect class="scaleArea2" x="0" y="47" width="20" height="94"></rect>
+                <rect class="scaleArea3" x="0" y="0" width="20" height="47"></rect>
+        <path id="lgTank2Ptr" d="M0,9.306048591020996L10.74569931823542,-9.306048591020996 -10.74569931823542,-9.306048591020996Z"
+        class="pointer" transform="translateY(100)">
+        </path></svg>
+        </div>
+        <text class="lgText" dx="10" dy="3">#2</text>
+        
+        
+        <script>
+            (function(scope) {
+                scope.$watch('msg', function(msg) {
+                    
+                    var input = msg.payload.Tank2_Temp_Actual
+                    var maxRange = msg.payload.Tank2_Temp_HighL
+                    var minRange = msg.payload.Tank2_Temp_LowL
+                    var minScale = 0
+                    var maxScale = 188 //this is the length of the gauge
+                    var setP = msg.payload.Tank2_Temp_Setpoint
+                    
+                    var diffH = maxRange - setP //find difference betweeb setpoint and max limit
+                    var diffL = setP - minRange //find difference between setpoint and min limit
+                    delta = ((diffH+diffL)/2)   //calculate the mean to allow the same span above/below setpoint
+                    
+                    var sL = minRange - delta   //scaled low limit
+                    var sH = maxRange + delta   //scaled high limit
+                    
+                    var rate = (maxScale - minScale)/(sL - sH) 
+                    var offset = minScale - (sH*rate)
+                    
+                    var value = (input*rate)+offset
+
+                    $("#lgTank2Ptr").animate(
+                        {'foo':value},
+                        {
+                            step: function(foo){
+                                $(this).attr('transform', 'translate(10,'+foo+')rotate(90)');
+                            },
+                            duration: 400
+                        }
+                        );
+                });
+            })(scope);
+        </script>
