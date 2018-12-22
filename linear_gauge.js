@@ -75,7 +75,7 @@
                     <rect class="scaleArea1" x="0" y="141" width="20" height="47"></rect>
                     <rect class="scaleArea2" x="0" y="47" width="20" height="94"></rect>
                     <rect class="scaleArea3" x="0" y="0" width="20" height="47"></rect>
-                    <path id="lgPtr" d="M0,9.306048591020996L10.74569931823542,-9.306048591020996 -10.74569931823542,-9.306048591020996Z" class="pointer" transform="translateY(100)">
+                    <path id="lgPtr" d="M0,9.306048591020996L10.74569931823542,-9.306048591020996 -10.74569931823542,-9.306048591020996Z" class="pointer" transform="translate(10,0)rotate(90)">
                     </path>
                 </svg>
             </div>

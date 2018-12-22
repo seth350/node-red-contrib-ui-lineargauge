@@ -5,7 +5,8 @@
     "dependencies": {
     },
     "author": {
-        "name": "Seth350"
+        "name": "Seth350",
+        "url": "https://github.com/seth350"
     },
     "contributors": [
         {
@@ -18,12 +19,12 @@
         "node-red", "gauge", "dashboard", "ui", "linear"
     ],
     "bugs": {
-        "url": "https://github.com/bartbutenaers/node-red-contrib-ui-linear-gauge/issues"
+        "url": "https://github.com/seth350/node-red-contrib-ui-lineargauge/issues"
     },
-    "homepage": "https://github.com/bartbutenaers/node-red-contrib-ui-linear-gauge",
+    "homepage": "https://github.com/seth350/node-red-contrib-ui-lineargauge/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/bartbutenaers/node-red-contrib-ui-linear-gauge.git"
+        "url": "https://github.com/seth350/node-red-contrib-ui-lineargauge.git"
     },
     "node-red": {
         "nodes": {
