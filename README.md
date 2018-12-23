@@ -8,12 +8,6 @@ This gauge has three different zones. One in the center is your acceptable value
 
 ![LinearGaugeImg](https://github.com/seth350/node-red-contrib-ui-lineargauge/blob/master/lineargauge.png?raw=true)
 
-# Instructions
-1. Make sure you have the latest version of Node-Red installed and dashboard.
-1. Add a ui_template node to your Node-Red flow.
-1. Copy and paste the contents of lineargauge.txt into the created ui_template node.
-1. The variables to inject:
-`msg.payload.currentvalue`
-`msg.payload.setpoint`
-`msg.payload.highlimit`
-` msg.payload.lowlimit`
+# Contributors
+Thank you Bart for turning this into a working node-red node. 
+https://github.com/bartbutenaers
