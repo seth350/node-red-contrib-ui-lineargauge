@@ -43,19 +43,19 @@
                 }
 
                 .scaleArea1 {
-                    fill: ` + config.colorArea1 + `;
+                    fill: ` + config.colorLowArea + `;
                     stroke: #000;
                     stroke-width: 1px;
                 }
 
                 .scaleArea2 {
-                    fill: ` + config.colorArea2 + `;
+                    fill: ` + config.colorMidArea + `;
                     stroke: #000;
                     stroke-width: 1px;
                 }
 
                 .scaleArea3 {
-                    fill: ` + config.colorArea3 + `;
+                    fill: ` + config.colorHighArea + `;
                     stroke: #000;
                     stroke-width: 1px;
                 }
@@ -67,11 +67,11 @@
             </style>
             
             <div id="lgTank2">
-                <text class="lgText" dx="10" dy="3">{{msg.payload.currentvalue}}</text>
+                <text class="lgText" dx="10" dy="3">{{msg.payload}}</text>
             </div>
             <div class="linearGauge1">
                 <svg class="scaleContainer">
-                    <title>HL: {{msg.payload.highlimit}}&#013;LL: {{msg.payload.lowlimit}}&#013;SP: {{msg.payload.setpoint}}</title>
+                    <title id="lt1"></title>
                     <rect class="scaleArea1" x="0" y="141" width="20" height="47"></rect>
                     <rect class="scaleArea2" x="0" y="47" width="20" height="94"></rect>
                     <rect class="scaleArea3" x="0" y="0" width="20" height="47"></rect>
@@ -121,12 +121,12 @@
                     debugger;
                     $scope.flag = true;
                     $scope.$watch('msg', function(msg) {
-                        var input = msg.payload.currentvalue
-                        var maxRange = msg.payload.highlimit
-                        var minRange = msg.payload.lowlimit
+                        var input = msg.payload
+                        var maxRange = config.highLimit||msg.highlimit
+                        var minRange = config.lowLimit||msg.lowlimit
                         var minScale = 0
                         var maxScale = 188 //this is the length of the gauge
-                        var setP = msg.payload.setpoint
+                        var setP = config.setpoint||msg.setpoint
 
                         var diffH = maxRange - setP //find difference between setpoint and max limit
                         var diffL = setP - minRange //find difference between setpoint and min limit
@@ -149,6 +149,7 @@
                                 duration: 400 //set the duration of the sliding animation of the pointer
                             }
                         );
+                        $("#lt1").html("HL: "+maxRange+"&#013;LL: "+minRange+"&#013;SP: "+setP);
                     });
                 }
             });
