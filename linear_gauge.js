@@ -88,13 +88,12 @@
     
     function LinearGaugeNode(config) {
          try {
+             var node = this;
             if(ui === undefined) {
                 ui = RED.require("node-red-dashboard")(RED);
             }
-
             RED.nodes.createNode(this, config);
             debugger;
-            var node = this;
             var group = RED.nodes.getNode(config.group);
             if (!group) { return; }
             var tab = RED.nodes.getNode(group.config.tab);
