@@ -19,7 +19,7 @@
     function HTML(config) {
         var html = String.raw`
             <style>
-                .linearGauge {
+                .linearGauge1 {
                     top: 0px;
                     left: 10px;
                     position:absolute;
@@ -66,10 +66,10 @@
                 }
             </style>
             
-            <div id="lgTank2">
-                <text class="lgText" dx="10" dy="3">{{msg.payload}}</text>
+            <div id="valueContainer">
+                <text class="lgText" dx="10" dy="3">{{msg.payload}}`+config.unit+`</text>
             </div>
-            <div class="linearGauge1">
+            <div class="linearGauge">
                 <svg class="scaleContainer">
                     <title id="lt1"></title>
                     <rect class="scaleArea1" x="0" y="141" width="20" height="47"></rect>
@@ -79,7 +79,7 @@
                     </path>
                 </svg>
             </div>
-            <text class="lgText" dx="10" dy="3">#2</text>
+            <text class="lgText" dx="10" dy="3">`+config.name+`</text>
         `;
         return html;
     };
