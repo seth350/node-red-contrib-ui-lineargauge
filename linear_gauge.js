@@ -94,17 +94,11 @@
             }
             RED.nodes.createNode(this, config);
             debugger;
-            var group = RED.nodes.getNode(config.group);
-            if (!group) { return; }
-            var tab = RED.nodes.getNode(group.config.tab);
-            if (!tab) { return; }
-            //var done = null;
 
             var html = HTML(config);
             var done = ui.addWidget({
                 node: node,
-                tab: tab,
-                group: group,
+                group: config.group,
                 width: config.width,
                 height: config.height,
                 format: html,
@@ -128,11 +122,11 @@
                     $scope.flag = true;
                     $scope.$watch('msg', function(msg) {
                         var input = msg.payload
-                        var maxRange = config.highLimit||msg.highlimit
-                        var minRange = config.lowLimit||msg.lowlimit
+                        var maxRange = msg.highlimit
+                        var minRange = msg.lowlimit
                         var minScale = 0
                         var maxScale = 188 //this is the length of the gauge
-                        var setP = config.setpoint||msg.setpoint
+                        var setP = msg.setpoint
 
                         var diffH = maxRange - setP //find difference between setpoint and max limit
                         var diffL = setP - minRange //find difference between setpoint and min limit
