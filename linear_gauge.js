@@ -84,15 +84,13 @@
         return html;
     };
 
-    var ui = RED.require("node-red-dashboard")(RED);
+    var ui = undefined
     
     function LinearGaugeNode(config) {
-/*         try {
-            var node = this;
+         try {
             if(ui === undefined) {
                 ui = RED.require("node-red-dashboard")(RED);
-            } */
-
+            }
 
             RED.nodes.createNode(this, config);
             debugger;
