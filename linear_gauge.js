@@ -84,25 +84,34 @@
         return html;
     };
 
-    var ui = undefined;
+    var ui = RED.require("node-red-dashboard")(RED);
     
     function LinearGaugeNode(config) {
-        try {
+/*         try {
             var node = this;
             if(ui === undefined) {
                 ui = RED.require("node-red-dashboard")(RED);
-            }
+            } */
+
+
             RED.nodes.createNode(this, config);
             debugger;
-            var done = null;
+            var node = this;
+            var group = RED.nodes.getNode(config.group);
+            if (!group) { return; }
+            var tab = RED.nodes.getNode(group.config.tab);
+            if (!tab) { return; }
+            //var done = null;
+
             var html = HTML(config);
-            done = ui.addWidget({
+            var done = ui.addWidget({
                 node: node,
+                tab: tab,
+                group: group,
                 width: config.width,
                 height: config.height,
                 format: html,
                 templateScope: "local",
-                group: config.group,
                 emitOnlyNewValues: false,
                 forwardInputMessages: false,
                 storeFrontEndInputAsState: false,
