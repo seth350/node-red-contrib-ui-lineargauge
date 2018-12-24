@@ -8,6 +8,10 @@ This gauge has three different zones. One in the center is your acceptable value
 
 ![LinearGaugeImg](https://github.com/seth350/node-red-contrib-ui-lineargauge/blob/master/lineargauge.png?raw=true)
 
+# Requirements
+Node-Red v19.4 or greater
+Node-Red-dashboard v2.13.0 or greater
+
 # Contributors
 Thank you Bart for turning this into a working node-red node. 
 https://github.com/bartbutenaers
