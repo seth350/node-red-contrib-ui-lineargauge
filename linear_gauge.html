@@ -30,9 +30,14 @@
                 }},
             height: {value: 0},
             name: {value: ''},
-            colorArea1: {value: '#ffffc0'},
-            colorArea2: {value: '#99ff99'},
-            colorArea3: {value: '#ff8080'}
+            colorLowArea: {value: '#ffffc0'},
+            colorMidArea: {value: '#99ff99'},
+            colorHighArea: {value: '#ff8080'},
+            highLimit: {value: 100},
+            setpoint: {value: 50},
+            lowLimit: {value: 0},
+            unit: {value:''}
+
         },
         inputs:1,
         outputs:1,
@@ -63,18 +68,35 @@
     </div>
     </br>
     <div class="form-row">
-        <label for="node-input-colorArea1"><i class="fa fa-paint-brush"></i> Color 1</span></label>
-        <input type="color" id="node-input-colorArea1"/>
+        <label for="node-input-highLimit"><i class="fa fa-sort-asc" aria-hidden="true"></i> High Limit Value</span></label>
+        <input type="number" id="node-input-highLimit"/>
     </div>
     <div class="form-row">
-        <label for="node-input-colorArea2"><i class="fa fa-paint-brush"></i> Color 2</span></label>
-        <input type="color" id="node-input-colorArea2"/>
+        <label for="node-input-setpoint"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Setpoint Value</span></label>
+        <input type="number" id="node-input-setpoint"/>
     </div>
     <div class="form-row">
-        <label for="node-input-colorArea3"><i class="fa fa-paint-brush"></i> Color 3</span></label>
-        <input type="color" id="node-input-colorArea3"/>
-    </div>    
+        <label for="node-input-lowLimit"><i class="fa fa-sort-desc" aria-hidden="true"></i> Low Limit Value</span></label>
+        <input type="number" id="node-input-highLimit"/>
+    </div>
     </br>
+    <div class="form-row">
+        <label for="node-input-colorHighArea"><i class="fa fa-paint-brush"></i> High Area Color</span></label>
+        <input type="color" id="node-input-colorHighArea"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-colorMidArea"><i class="fa fa-paint-brush"></i> Middle Area Color</span></label>
+        <input type="color" id="node-input-colorMidArea"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-colorLowArea"><i class="fa fa-paint-brush"></i> Low Area Color</span></label>
+        <input type="color" id="node-input-colorLowArea"/>
+    </div>    
+    <div class="form-row">
+        <label for="node-input-unit"><i class="fa fa-asterisk" aria-hidden="true"></i> Unit</span></label>
+        <input type="text" id="node-input-unit"/>
+    </div>
+</br>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
