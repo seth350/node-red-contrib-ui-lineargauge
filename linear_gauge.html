@@ -36,7 +36,7 @@
             highLimit: {value: 100},
             setpoint: {value: 50},
             lowLimit: {value: 0},
-            unit: {value:''}
+            unit: {value:'units'}
 
         },
         inputs:1,
@@ -105,5 +105,11 @@
 
 <script type="text/x-red" data-help-name="linear-gauge">
     <p>A Node Red dashboard ui node to display a linear gauge.</p>
+    <p>Takes the <code>msg.payload</code> and displays the value at the top of the gauge and determines pointer position.</p>
+    <p>You can optionally configure a high/low/setpoint in the node configuration, or pass them in from a msg.</p>
+    <p>High Limit: <code>msg.highlimit</code></p>
+    <p>Setpoint: <code>msg.setpoint</code></p>
+    <p>Low Limit: <code>msg.lowlimit</code></p>
+
 </script>
 
