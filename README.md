@@ -1,5 +1,5 @@
 # node-red-contrib-ui-lineargauge
-A Node-Red template that creates a linear gauge with high/low limits and animated sliding pointer.
+A Node-Red ui node that creates a linear gauge with high/low limits and animated sliding pointer.
 
 This is very useful for quickly checking many different kinds of processes and how they are performing.
 Ideally, the pointer should be in the center of the gauge. This would indicate that the process is at it's setpoint.
