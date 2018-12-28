@@ -19,6 +19,14 @@ Using `msg.payload` as the value to display and position the pointer.
 Node-Red v19.4 or greater
 Node-Red-dashboard v2.13.0 or greater
 
+# Install
+<p>Run the following command in your Node-RED user directory - typically <code>~/.node-red</code></p>
+<pre>
+<code>
+    npm install node-red-contrib-ui_list
+</code>
+</pre>
+
 # Example
 <pre>
 <code>
