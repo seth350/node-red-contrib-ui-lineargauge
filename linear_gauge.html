@@ -33,9 +33,6 @@
             colorLowArea: {value: '#ffffc0'},
             colorMidArea: {value: '#99ff99'},
             colorHighArea: {value: '#ff8080'},
-            highLimit: {value: 100},
-            setpoint: {value: 50},
-            lowLimit: {value: 0},
             unit: {value:'units'}
 
         },
@@ -68,19 +65,6 @@
     </div>
     </br>
     <div class="form-row">
-        <label for="node-input-highLimit"><i class="fa fa-sort-asc" aria-hidden="true"></i> High Limit Value</span></label>
-        <input type="number" id="node-input-highLimit"/>
-    </div>
-    <div class="form-row">
-        <label for="node-input-setpoint"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> Setpoint Value</span></label>
-        <input type="number" id="node-input-setpoint"/>
-    </div>
-    <div class="form-row">
-        <label for="node-input-lowLimit"><i class="fa fa-sort-desc" aria-hidden="true"></i> Low Limit Value</span></label>
-        <input type="number" id="node-input-lowLimit"/>
-    </div>
-    </br>
-    <div class="form-row">
         <label for="node-input-colorHighArea"><i class="fa fa-paint-brush"></i> High Area Color</span></label>
         <input type="color" id="node-input-colorHighArea"/>
     </div>
@@ -104,12 +88,17 @@
 </script>
 
 <script type="text/x-red" data-help-name="linear-gauge">
-    <p>A Node Red dashboard ui node to display a linear gauge.</p>
-    <p>Takes the <code>msg.payload</code> and displays the value at the top of the gauge and determines pointer position.</p>
-    <p>You can optionally configure a high/low/setpoint in the node configuration, or pass them in from a msg.</p>
+    <p>A Node Red dashboard ui node to display a linear gauge with high & low limit areas.</p>
+    <p>Takes the <code>msg.payload</code> and displays the value at the top of the gauge and slides the pointer up/down the gauge.</p>
+    <p>The node's <code>Name</code> is displayed at the bottom of the gauge for indication of what the gauge is for. I.E., "Tank #1 Temperature"</p>
+    <p>The node's <code>Unit</code> will be displayed at the trailing end of the current value. A unit can be anything, for example: <code>lbs psi F°</code></p>
+    <p>The area's color is also customizable within the configuration but cannot be set with a msg.</p>
+    <p>There is also a tooltip provided that will display the High Limit, Low Limit, and Setpoint value.</p>
+    <p>You can pass the following in from a msg.</p>
     <p>High Limit: <code>msg.highlimit</code></p>
     <p>Setpoint: <code>msg.setpoint</code></p>
     <p>Low Limit: <code>msg.lowlimit</code></p>
+    <p>Actual Value: <code>msg.payload</code></p>
 
 </script>
 
