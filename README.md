@@ -23,7 +23,7 @@ Node-Red-dashboard v2.13.0 or greater
 <p>Run the following command in your Node-RED user directory - typically <code>~/.node-red</code></p>
 <pre>
 <code>
-    npm install node-red-contrib-ui_list
+    npm i node-red-contrib-ui-lineargauge
 </code>
 </pre>
 
