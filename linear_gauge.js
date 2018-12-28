@@ -27,7 +27,7 @@
                     height:11px;
                 }
 
-                #lgValue {
+                #valueContainer {
                     position: absolute;
                     width:64px;
                     height:11px;
@@ -42,44 +42,27 @@
                     stroke: #404040;
                 }
 
-                .scaleArea1 {
-                    fill: ` + config.colorLowArea + `;
-                    stroke: #000;
-                    stroke-width: 1px;
-                }
-
-                .scaleArea2 {
-                    fill: ` + config.colorMidArea + `;
-                    stroke: #000;
-                    stroke-width: 1px;
-                }
-
-                .scaleArea3 {
-                    fill: ` + config.colorHighArea + `;
-                    stroke: #000;
-                    stroke-width: 1px;
-                }
-
                 .scaleContainer {
                     height:188px;
                     width:100%;
                 }
             </style>
-            
+            <div id="lg_{{$id}}>
             <div id="valueContainer">
                 <text class="lgText" dx="10" dy="3">{{msg.payload}}`+config.unit+`</text>
             </div>
             <div class="linearGauge">
                 <svg class="scaleContainer">
-                    <title id="lt1"></title>
-                    <rect class="scaleArea1" x="0" y="141" width="20" height="47"></rect>
-                    <rect class="scaleArea2" x="0" y="47" width="20" height="94"></rect>
-                    <rect class="scaleArea3" x="0" y="0" width="20" height="47"></rect>
-                    <path id="lgPtr" d="M0,9.306048591020996L10.74569931823542,-9.306048591020996 -10.74569931823542,-9.306048591020996Z" class="pointer" transform="translate(10,0)rotate(90)">
+                    <title id="lgtooltip_{{$id}}"></title>
+                    <rect class="scaleArea1_{{$id}}" x="0" y="141" width="20" height="47" stroke="#000" stroke-width="1px" fill="` + config.colorLowArea + `"></rect>
+                    <rect class="scaleArea2_{{$id}}" x="0" y="47" width="20" height="94" stroke="#000" stroke-width="1px" fill="` + config.colorMidArea + `"></rect>
+                    <rect class="scaleArea3_{{$id}}" x="0" y="0" width="20" height="47" stroke="#000" stroke-width="1px" fill="` + config.colorHighArea + `"></rect>
+                    <path id="lgPtr_{{$id}}" d="M0,9.306048591020996L10.74569931823542,-9.306048591020996 -10.74569931823542,-9.306048591020996Z" class="pointer" transform="translate(10,0)rotate(90)">
                     </path>
                 </svg>
             </div>
             <text class="lgText" dx="10" dy="3">`+config.name+`</text>
+            </div>
         `;
         return html;
     };
@@ -119,14 +102,17 @@
                 },
                 initController: function($scope, events) {
                     debugger;
+
+                    
+                    
                     $scope.flag = true;
                     $scope.$watch('msg', function(msg) {
                         var input = msg.payload
                         var maxRange = msg.highlimit
-                        var minRange = msg.lowlimit
+                        var minRange =  msg.lowlimit
                         var minScale = 0
                         var maxScale = 188 //this is the length of the gauge
-                        var setP = msg.setpoint
+                        var setP =  msg.setpoint
 
                         var diffH = maxRange - setP //find difference between setpoint and max limit
                         var diffL = setP - minRange //find difference between setpoint and min limit
@@ -140,7 +126,10 @@
 
                         var value = (input*rate)+offset
 
-                        $("#lgPtr").animate(
+                        var ptr = document.getElementById("lgPtr_"+$scope.$eval('$id')) //get the pointer object
+                        var tt = document.getElementById("lgtooltip_"+$scope.$eval('$id')) //get the tooltip object
+
+                        $(ptr).animate(
                             {'foo':value},
                             {
                                 step: function(foo){
@@ -149,7 +138,7 @@
                                 duration: 400 //set the duration of the sliding animation of the pointer
                             }
                         );
-                        $("#lt1").html("HL: "+maxRange+"&#013;LL: "+minRange+"&#013;SP: "+setP);
+                        $(tt).html("HL: "+maxRange+"&#013;LL: "+minRange+"&#013;SP: "+setP);
                     });
                 }
             });
