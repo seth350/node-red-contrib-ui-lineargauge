@@ -6,8 +6,7 @@ Ideally, the pointer should be in the center of the gauge. This would indicate t
 
 This gauge has three different zones. One in the center is your acceptable value window. The top is the high limit zone and the bottom is the low limit zone. This way you can easily see how close the process is to it's high or low limit.
 
-You can optionally enter a high/low/setpoint in the node configuration.
-The node can also be injected with these values using,
+The node can be injected with:
 High Limit: `msg.highlimit`
 Setpoint: `msg.setpoint`
 Low Limit: `msg.lowlimit`
