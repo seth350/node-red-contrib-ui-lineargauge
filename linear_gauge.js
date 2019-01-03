@@ -138,96 +138,99 @@
                  
                     $scope.flag = true;                                         // not sure if this is needed?
                     $scope.$watch('msg', function(msg) {
+                        if (!msg) {
+                             // leave when the msg is undefined
+                             return
+			}
 
                         var payload = msg.payload
                         var highLimit = msg.highlimit
-						var lowLimit=  msg.lowlimit
-						var setpoint =  msg.setpoint
-                        var gaugeStart = 0										// this is the gauge starting position, should be left at zero
+                        var lowLimit=  msg.lowlimit
+                        var setpoint =  msg.setpoint
+                        var gaugeStart = 0                                      // this is the gauge starting position, should be left at zero
                         var gaugeEnd = 188                                      // this is the length of the gauge, if the gauge is to be longer, this value should be the sum of the heights of the scale areas
 						
 						
-						/**
-						 * The pointer is positioned within the scale container with the following equation.
-						 * Pointer Position = (msg.payload x Rate) + Offset
-						 * Rate = (Length Of Gauge - 0) / ((msg.lowlimit - delta) - (msg.highlimt + delta)
-						 * Offset = 0 - (msg.highlimit + delta) x Rate)
-						 * This equation will scale the msg.payload value into the gauge's length linearly. 
-						 */
+                        /**
+                          * The pointer is positioned within the scale container with the following equation.
+                          * Pointer Position = (msg.payload x Rate) + Offset
+                          * Rate = (Length Of Gauge - 0) / ((msg.lowlimit - delta) - (msg.highlimt + delta)
+                          * Offset = 0 - (msg.highlimit + delta) x Rate)
+                          * This equation will scale the msg.payload value into the gauge's length linearly. 
+                          */
 
-                        var highDiff = highLimit - setpoint							//find difference between setpoint and the high limit
-						var lowDiff = setpoint - lowLimit 							//find difference between setpoint and the low limit
+                        var highDiff = highLimit - setpoint                      //find difference between setpoint and the high limit
+                        var lowDiff = setpoint - lowLimit                        //find difference between setpoint and the low limit
 						
-						/**
-						 * In order to span the the high and low areas of the gauge, we need to first calculate 
-						 * how much area to allow above and below the high and low limits.
-						 * The high limit starts where the middle area meets the top area.
-						 * The low limit starts where the middle area meets the bottom area.
-						 * 	    __
-						 *     |  | <- Gauge Start 
-						 * 	   |  |
-						 *     |__| <- High limit begins at this horizontal line
-						 *     |  | <-|
-						 *     |  |   |  Allowable  
-						 *     |  |   |    Range
-						 *     |  | <-|
-						 *     |__| <- Low limit begins at this horizontal line
-						 *     |  | 
-						 *     |  |
-						 *     |__| <- Gauge End
-						 * 	   
-						 * Without some extra room at either end, the pointer would peg out at
-						 * either end if the payload >= highLimit or if payload <= lowLimit.
-						 * Adding some cushion on either end of the gauge allows the user to visually
-						 * see how far above or below the setpoint range the payload is.
-						 */
+                        /**
+                          * In order to span the the high and low areas of the gauge, we need to first calculate 
+                          * how much area to allow above and below the high and low limits.
+                          * The high limit starts where the middle area meets the top area.
+                          * The low limit starts where the middle area meets the bottom area.
+                          *      __
+                          *     |  | <- Gauge Start 
+                          *     |  |
+                          *     |__| <- High limit begins at this horizontal line
+                          *     |  | <-|
+                          *     |  |   |  Allowable  
+                          *     |  |   |    Range
+                          *     |  | <-|
+                          *     |__| <- Low limit begins at this horizontal line
+                          *     |  | 
+                          *     |  |
+                          *     |__| <- Gauge End
+                          * 	   
+                          * Without some extra room at either end, the pointer would peg out at
+                          * either end if the payload >= highLimit or if payload <= lowLimit.
+                          * Adding some cushion on either end of the gauge allows the user to visually
+                          * see how far above or below the setpoint range the payload is.
+                          */
 
-                        var delta = ( ( highDiff + lowDiff ) / 2 )   					//calculate the mean to allow the same span above/below setpoint area
+                        var delta = ( ( highDiff + lowDiff ) / 2 )                //calculate the mean to allow the same span above/below setpoint area
 
-                        var lowSpan = lowLimit - delta   								//calculated low area span
-                        var highSpan = highLimit + delta   								//calulated high area span
+                        var lowSpan = lowLimit - delta                            //calculated low area span
+                        var highSpan = highLimit + delta                          //calulated high area span
 
                         var rate = ( gaugeEnd - gaugeStart ) / ( lowSpan - highSpan ) 
                         var offset = gaugeStart - ( highSpan * rate )
 
-						var value = ( payload * rate ) + offset							//final scaled value should be between the value of gaugeStart and gaugeEnd
+                        var value = ( payload * rate ) + offset                  //final scaled value should be between the value of gaugeStart and gaugeEnd
 						
 
+                        /**
+                          * In order to reference an element within the HTML of the node, we must make a call
+                          * to the $scope to get the $id of the element we want to interact with. 
+                          * We do this by calling 
+                          *  $scope.$eval('$id')
+                          * This will return the unique identifier as a number to which is associated with
+                          * this particular node.
+                          * In order to interact with an element, we must also declare an object to reference
+                          * the element.
+                          * This is done by accessing the DOM via Javascript
+                          * 	document.getElementById("elementId_"+$scope.$eval('$id))
+                          * Note that in order for this to work, you must have also entered the element id
+                          * in the HTML. For example.
+                          * 	<div id="elementId_{{$id}}">
+                          * This is an Angular expression that will inject a unique ID number where ever you place {{$id}}. 
+                          * During creation of the ui node on the dashboard, only one ID number will be used during the 
+                          * time of creation. 
+                          */	
 
-						/**
-						 * In order to reference an element within the HTML of the node, we must make a call
-						 * to the $scope to get the $id of the element we want to interact with. 
-						 * We do this by calling 
-						 *  $scope.$eval('$id')
-						 * This will return the unique identifier as a number to which is associated with
-						 * this particular node.
-						 * In order to interact with an element, we must also declare an object to reference
-						 * the element.
-						 * This is done by accessing the DOM via Javascript
-						 * 	document.getElementById("elementId_"+$scope.$eval('$id))
-						 * Note that in order for this to work, you must have also entered the element id
-						 * in the HTML. For example.
-						 * 	<div id="elementId_{{$id}}">
-						 * This is an Angular expression that will inject a unique ID number where ever you place {{$id}}. 
-						 * During creation of the ui node on the dashboard, only one ID number will be used during the 
-						 * time of creation. 
-						 */	
-
-						var ptr = document.getElementById("lgPtr_"+$scope.$eval('$id')) 					//get the pointer object
+                          var ptr = document.getElementById("lgPtr_"+$scope.$eval('$id'))               //get the pointer object
 						
-						$(ptr).animate(																		//animate the pointer
+                          $(ptr).animate(																		//animate the pointer
                             {'ptrVal':value},																//get the final scaled value
                             {
                                 step: function(ptrVal){
-                                    $(this).attr('transform', 'translate(10,'+ptrVal+') rotate(90)');		//update the transform attribute with the new final scaled value
+                                    $(this).attr('transform', 'translate(10,'+ptrVal+') rotate(90)');   //update the transform attribute with the new final scaled value
                                 },
                                 duration: 400 																//sets the duration of the sliding animation of the pointer
                             }
                         );
 
-						var tt = document.getElementById("lgtooltip_"+$scope.$eval('$id')) 					//get the tooltip object
+                        var tt = document.getElementById("lgtooltip_"+$scope.$eval('$id'))             //get the tooltip object
 						
-						$(tt).html("HL: "+highLimit+"&#013;SP: "+setpoint+"&#013;LL: "+lowLimit);			//set the tooltip to include the high/low/setpoint
+                        $(tt).html("HL: "+highLimit+"&#013;SP: "+setpoint+"&#013;LL: "+lowLimit);      //set the tooltip to include the high/low/setpoint
                         
                     });
                 }
@@ -235,12 +238,12 @@
         }
         catch (e) {
             console.log(e);		// catch any errors that may occur and display them in the web browsers console
-		}
+        }
 		
-		/**
-		 * REQUIRED
-		 * I'm not sure what this does, but it is needed.
-		 */
+        /**
+          * REQUIRED
+          * I'm not sure what this does, but it is needed.
+          */
         node.on("close", function() {
             if (done) {
                 done();
@@ -249,9 +252,9 @@
     }
 
 
-	/**
-	 *  REQUIRED
-	 * Registers the node with a name, and a configuration.
-	 */
+  /**
+    *  REQUIRED
+    * Registers the node with a name, and a configuration.
+    */
     RED.nodes.registerType("linear-gauge", LinearGaugeNode);
 }
