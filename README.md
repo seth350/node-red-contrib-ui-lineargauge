@@ -15,6 +15,12 @@ Using `msg.payload` as the value to display and position the pointer.
 
 ![LinearGaugeImg](https://github.com/seth350/node-red-contrib-ui-lineargauge/blob/master/linearGauges.PNG?raw=true)
 
+# TODO
+* Add ability to set font color and size of individual gauges, as well as individual fonts within a gauge. 
+    E.G., msg.valueColor, msg.valueSize, msg.nameColor, msg.nameSize
+* Add ability to set high, low, and setpoint values within the node configuration and then pass a msg.payload with the actual value.
+* Add ability to set pointer color, msg.ptrColor.
+
 # Requirements
 Node-Red v19.4 or greater
 Node-Red-dashboard v2.13.0 or greater
